@@ -1,4 +1,4 @@
-package cs505finaltemplate.Topics;
+package cs505-final-project.Topics;
 
 import java.util.List;
 
