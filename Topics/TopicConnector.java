@@ -1,4 +1,4 @@
-package cs505finaltemplate.Topics;
+package cs505-final-project.Topics;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -6,7 +6,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-import cs505finaltemplate.Launcher;
+import cs505-final-project.Launcher;
 import io.siddhi.query.api.expression.condition.In;
 
 import java.lang.reflect.Type;
