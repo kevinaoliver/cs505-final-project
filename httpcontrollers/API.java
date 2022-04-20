@@ -38,7 +38,7 @@ public class API {
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("team_name", "Hammer-Isa-Oliver");
             responseMap.put("Team_members_sids", "[10730209,912349421,12257265]");
-            responseMap.put("app_status_code","0");
+            responseMap.put("app_status_code","1");
 
             responseString = gson.toJson(responseMap);
 
