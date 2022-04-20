@@ -56,11 +56,12 @@ public class Launcher {
         //end DB/CEP Init
 
         //start message collector
+        //Los Jalapenos info
         Map<String,String> message_config = new HashMap<>();
-        message_config.put("hostname",""); //Fill config for your team in
-        message_config.put("username","");
-        message_config.put("password","");
-        message_config.put("virtualhost","");
+        message_config.put("hostname","128.163.202.50");
+        message_config.put("username","student");
+        message_config.put("password","student01");
+        message_config.put("virtualhost","7");
 
         topicConnector = new TopicConnector(message_config);
         topicConnector.connect();
@@ -81,7 +82,7 @@ public class Launcher {
     private static void startServer() throws IOException {
 
         final ResourceConfig rc = new ResourceConfig()
-        .packages("cs505finaltemplate.httpcontrollers");
+        .packages("cs505-final-project.httpcontrollers");
 
         System.out.println("Starting Web Server...");
         URI BASE_URI = UriBuilder.fromUri("http://0.0.0.0/").port(WEB_PORT).build();
