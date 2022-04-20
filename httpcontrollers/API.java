@@ -86,7 +86,7 @@ public class API {
     public Response reset() {
         String responseString = "{}";
         try {
-            Launcher.GraphDBEngine.graphDB.clearDB(Launcher.GraphDBEngine.db)
+            Launcher.GraphDBEngine.graphDB.clearDB(Launcher.GraphDBEngine.db);
 
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("reset_status_code","1");
