@@ -31,14 +31,17 @@ public class Launcher {
 
         //READ CLASS COMMENTS BEFORE USING
         //graphDBEngine = new GraphDBEngine();
-
+        
+        //New instance of CEPEngine
         cepEngine = new CEPEngine();
 
         System.out.println("Starting CEP...");
-
+        
+        //Input stream has one attribute - zip_code, of type string
         inputStreamName = "testInStream";
         String inputStreamAttributesString = "zip_code string";
 
+        //Output stream has two attributes - zip_code of type string, count of zip codes type long
         String outputStreamName = "testOutStream";
         String outputStreamAttributesString = "zip_code string, count long";
         
@@ -47,7 +50,8 @@ public class Launcher {
         //You want counts per zip_code, to say another way "grouped by" zip_code
         String queryString = " " +
                 "from testInStream#window.timeBatch(15 sec) " +
-                "select zip_code, count(zip_code) " +
+                "select zip_code, count(zip_code) as count " +
+                "group by zip_code " +
                 "insert into testOutStream; ";
 
         cepEngine.createCEP(inputStreamName, outputStreamName, inputStreamAttributesString, outputStreamAttributesString, queryString);
