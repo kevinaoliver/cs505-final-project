@@ -27,7 +27,7 @@ public class API {
         gson = new Gson();
     }
 
-//MF 1 - Get team request
+    //MF 1 - Get team request
     @GET
     @Path("/getteam")
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,5 +79,28 @@ public class API {
         return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
     }
 
+    // Application Management Function 2
+    @GET
+    @Path("/reset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response reset() {
+        String responseString = "{}";
+        try {
+            Launcher.GraphDBEngine.graphDB.clearDB(Launcher.GraphDBEngine.db)
 
+            Map<String,String> responseMap = new HashMap<>();
+            responseMap.put("reset_status_code","1");
+            responseString = gson.toJson(responseMap);
+
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+        }
 }
