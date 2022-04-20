@@ -17,7 +17,10 @@ public class OutputSubscriber implements InMemoryBroker.Subscriber {
         try {
             System.out.println("OUTPUT CEP EVENT: " + msg);
             System.out.println("");
-
+            
+            //Ankan suggested using a regular expression to extricate data from msg
+            //Check base case of if square brackets enclose msg
+            //If only one item in msg, will not contain square brackets around contents of response
             //You will need to parse output and do other logic,
             //but this sticks the last output value in main
             Launcher.lastCEPOutput = String.valueOf(msg);
