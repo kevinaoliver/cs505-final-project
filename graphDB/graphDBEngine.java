@@ -25,13 +25,13 @@ public class GraphDBEngine {
         //ODatabaseSession db = orient.open("test", "root", "rootpwd");
 
         // Create a connection to OrientDB server running on the VM
-        OrientDB orient = new OrientDB("remote:127.0.0.1:2424", OrientDBConfig.defaultConfig());
+        OrientDB orient = new OrientDB("remote:127.0.0.1:2424", "root", "rootpwd", OrientDBConfig.defaultConfig());
         // Create database
-        orient.create("test", ODatabaseType.PLOCAL);
+        orient.createIfNotExists("test", ODatabaseType.PLOCAL);
         // Open database
         ODatabaseSession db = orient.open("test", "root", "rootpwd");
 
-        clearDB(db);
+        //clearDB(db);
 
         //create classes
         OClass patient = db.getClass("patient");

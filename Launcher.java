@@ -1,3 +1,6 @@
+// NOTE: YOU! YES, YOU! When running the Docker container for this code run the following command!!!!
+// sudo docker run -d --network="host" --rm -p 8082:8082 cs505-final
+
 package cs505-final-project;
 
 import cs505-final-project.CEP.CEPEngine;
