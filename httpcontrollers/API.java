@@ -103,4 +103,88 @@ public class API {
         }
         return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
         }
+
+     // Real-time Reporting Function 1 
+     @GET
+     @Path("/zipalertlist")
+     @Produces(MediaType.APPLICATION_JSON)
+     public Response zipalertlist() {
+         String responseString = "{}";
+         try {
+             // Look through list of zipcodes to see if any match with zipcodes in the previous output
+             for(Map.Entry<String, Integer> set : Launcher.zipcodes.entrySet()) {
+                 // The current key value (zipcode) in zipcodes map
+                 String current_zip = set.getKey();
+                 //System.out.println("Current ZIP: " + current_zip);
+                 // See if the current new zipcode is also in the old zipcodes
+                 if (Launcher.old_zipcodes.containsKey(current_zip)) {
+                     // Check if the count value of the old zipcode is greater than or equal to 
+                     // the count value of the new zipcode
+                     int old_count = Launcher.old_zipcodes.get(current_zip);
+                     int new_count = Launcher.zipcodes.get(current_zip);
+                     if (new_count >= (old_count * 2)) {
+                         Launcher.alert_zips.add(current_zip);
+                         //System.out.println("Added ZIP Code to alert list!");
+                     }
+                 }
+             }
+             
+             // Set new zipcodes to old_zipcodes
+             //System.out.println("Old Old Zipcodes: " + Launcher.old_zipcodes);
+             Launcher.old_zipcodes = Launcher.zipcodes;
+             //System.out.println("New Old Zipcodes: " + Launcher.old_zipcodes);
+ 
+             Map<String, ArrayList<String>> responseMap = new HashMap<>();
+             responseMap.put("ziplist", Launcher.alert_zips);
+             responseString = gson.toJson(responseMap);
+ 
+         } catch (Exception ex) {
+ 
+             StringWriter sw = new StringWriter();
+             ex.printStackTrace(new PrintWriter(sw));
+             String exceptionAsString = sw.toString();
+             ex.printStackTrace();
+ 
+             return Response.status(500).entity(exceptionAsString).build();
+         }
+         return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+     }
+ 
+     // Real-time Reporting Function 2
+     @GET
+     @Path("/alertlist")
+     @Produces(MediaType.APPLICATION_JSON)
+     public Response alertlist() {
+         String responseString = "{}";
+         try {
+             int state_status = 0;
+ 
+             /*
+             Launcher.alert_zips.add("1");
+             Launcher.alert_zips.add("2");
+             Launcher.alert_zips.add("3");
+             Launcher.alert_zips.add("4");
+             Launcher.alert_zips.add("5");
+             Launcher.alert_zips.add("6");
+             */ 
+             
+             if (Launcher.alert_zips.size() >= 5) {
+                 state_status = 1;
+             }
+ 
+             Map<String,String> responseMap = new HashMap<>();
+             responseMap.put("state_status", String.valueOf(state_status)); 
+             responseString = gson.toJson(responseMap);
+ 
+         } catch (Exception ex) {
+ 
+             StringWriter sw = new StringWriter();
+             ex.printStackTrace(new PrintWriter(sw));
+             String exceptionAsString = sw.toString();
+             ex.printStackTrace();
+ 
+             return Response.status(500).entity(exceptionAsString).build();
+         }
+         return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+     }
 }

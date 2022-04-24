@@ -21,9 +21,14 @@ public class GraphDBEngine {
 
         //use the orientdb dashboard to create a new database
         //see class notes for how to use the dashboard
+        //OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
+        //ODatabaseSession db = orient.open("test", "root", "rootpwd");
 
-
-        OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
+        // Create a connection to OrientDB server running on the VM
+        OrientDB orient = new OrientDB("remote:127.0.0.1:2424", OrientDBConfig.defaultConfig());
+        // Create database
+        orient.create("test", ODatabaseType.PLOCAL);
+        // Open database
         ODatabaseSession db = orient.open("test", "root", "rootpwd");
 
         clearDB(db);

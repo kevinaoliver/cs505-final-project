@@ -22,6 +22,12 @@ public class Launcher {
     public static TopicConnector topicConnector;
     public static final int WEB_PORT = 8082;
 
+    // Map for zipcodes output from CEP
+    public static Map<String,Integer> old_zipcodes = new HashMap<>();
+    public static Map<String,Integer> zipcodes = new HashMap<>();
+    // List of alerted zipcodes
+    public static ArrayList<String> alert_zips = new ArrayList<String>();
+
     public static String lastCEPOutput = "{}";
 
     public static void main(String[] args) throws IOException {
