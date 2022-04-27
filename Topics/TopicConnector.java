@@ -88,6 +88,49 @@ public class TopicConnector {
                     //insert into CEP
                     Launcher.cepEngine.input("testInStream",testInput);
 
+                    
+                    // Get properties for new vertices in database
+                    String patient_mrn = testingData.patient_mrn;
+                    List<String> contact_list = testingData.contact_list;
+                    List<String> event_list = testingData.event_list;
+
+                    // Create new patient vertex if a node with that mrn doesn't exist
+                    OVertex patient = Launcher.graphDBEngine.createPatient(patient_mrn, contact_list, event_list);
+                    //Launcher.graphDBEngine.getRID("patient", "patient_mrn", patient_mrn);
+                    
+                    if (Launcher.graphDBEngine.ifPatientExists(patient_mrn) == false) {
+                        // Create edges between patient and events listed in event_list
+                        for (int i = 0; i < event_list.size(); i++) {
+                            // Get current event_id 
+                            String event_id = event_list.get(i);
+
+                            // Check if event node already exists
+                            if (Launcher.graphDBEngine.ifEventExists(event_id) == false) {
+                                // Create new event vertex                            
+                                OVertex event = Launcher.graphDBEngine.createEvent(event_id);
+                                // Create attended_event edge between patient and event
+                                Launcher.graphDBEngine.createEventEdge(patient,event);
+                            } 
+                            /*
+                            else { // Event node already exists
+                                // Get existing event node
+                                OVertex event = Launcher.graphDBEngine.getVertex("event", "event_id", event_id);
+                                // Create attended_event edge between patient and event
+                                Launcher.graphDBEngine.createEventEdge(patient, event);
+                            }
+                            */
+                        }
+
+                        // Create has_contacted edge between patients 
+                        for (int i = 0; i < contact_list.size(); i++) {
+                            // Get current patient_mrn
+                            String mrn = contact_list.get(i);
+
+                            OVertex contactedPatient = Launcher.graphDBEngine.createPatientForEdge(mrn);
+
+                            Launcher.graphDBEngine.createPatientEdge(patient, contactedPatient);
+                        }
+                    }
                     //do something else with each record
                     /*
                     System.out.println("*Java Class*");

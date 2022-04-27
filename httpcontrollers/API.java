@@ -86,10 +86,14 @@ public class API {
     public Response reset() {
         String responseString = "{}";
         try {
-            Launcher.GraphDBEngine.graphDB.clearDB(Launcher.GraphDBEngine.db);
+            int reset_status_code = 0;
+
+            Launcher.graphDBEngine.clearDB();
+            
+            reset_status_code = 1;
 
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("reset_status_code","1");
+            responseMap.put("reset_status_code",String.valueOf(reset_status_code));
             responseString = gson.toJson(responseMap);
 
         } catch (Exception ex) {
@@ -187,4 +191,50 @@ public class API {
          }
          return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
      }
+
+    // Contact Tracing Function 1  **IN-PROGRESS**
+    @GET
+    @Path("/getconfirmedcontacts/{mrn}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getconfirmedcontacts(@PathParam("mrn") String mrn) {
+        String responseString = "{}";
+        try{
+            System.out.println("Contact Tracing Function 1 Accessed!");
+            responseString = "This is what was put in the URL: " + mrn;
+            //Launcher.graphDBEngine.getContacts(mrn);
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+
+    // Contact Tracing Function 2  **IN-PROGRESS**
+    @GET
+    @Path("/getpossiblecontacts/{mrn}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getpossiblecontacts(@PathParam("mrn") String mrn) {
+        String responseString = "{}";
+        try{
+            System.out.println("Contact Tracing Function 2 Accessed!");
+            responseString = "This is what was put in the URL: " + mrn;
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+
 }
