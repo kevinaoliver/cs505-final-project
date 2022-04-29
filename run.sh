@@ -1,3 +1,11 @@
+#!/bin/bash
+
+#Compile code with Maven, produceds target directory
 mvn clean package
-cd target
-java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar cs505-final-template-1.0-SNAPSHOT.jar
+
+#Creates Docker container, needs file named Dockerfile to create it, done separately
+sudo docker build -t cs505-final .
+
+#Run Docker container 
+sudo docker run -d --network="host" --rm -p 9000:9000 cs505-final
+#sudo docker run -it --network="host" --rm -p 8082:8082 cs505-final
